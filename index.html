@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAXSELL - بطاقات RedotPay المدفوعة مسبقاً</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f3460;
+            --secondary: #e94560;
+            --accent: #533483;
+            --gold: #ffd700;
+            --light: #f8f9fa;
+            --dark: #1a1a2e;
+            --gray: #6c757d;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* خلفية متحركة */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000') center/cover;
+            opacity: 0.03;
+            z-index: -1;
+            animation: bgAnimation 30s linear infinite;
+        }
+        
+        @keyframes bgAnimation {
+            0% { background-position: 0 0; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0 0; }
+        }
+        
+        /* الترويسة المحسنة */
+        .header {
+            background: rgba(15, 52, 96, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(83, 52, 131, 0.5);
+            padding: 0.5rem 0;
+            transition: all 0.4s ease;
+        }
+        
+        .header.scrolled {
+            padding: 0.3rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.03);
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold), #ffb700);
+            border-radius: 12px;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            box-shadow: 0 5px 15px rgba(255, 183, 0, 0.3);
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--gold), #ffb700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        .nav-links li a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 0.8rem;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .nav-links li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+        
+        .nav-links li a:hover {
+            color: white;
+        }
+        
+        .nav-links li a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, var(--secondary), #ff3d5f);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+        
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* القسم الرئيسي مع الاستمارة */
+        .hero {
+            padding: 10rem 2rem 5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero h2 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(to right, var(--gold), white);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 90%;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        .hero-highlight {
+            color: var(--gold);
+            font-weight: 700;
+        }
+        
+        .order-form {
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 15px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+            animation: fadeInRight 1s ease-out;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(83, 52, 131, 0.5);
+        }
+        
+        .gift-badge {
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--gold), #ffa500);
+            color: var(--dark);
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.4);
+            animation: pulse 2s infinite;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 165, 0, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
+        }
+        
+        .form-title {
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .form-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: right;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.9rem 1.3rem;
+            border: 1px solid rgba(83, 52, 131, 0.5);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s;
+            background: rgba(15, 52, 96, 0.3);
+            color: white;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+        
+        .form-submit {
+            background: linear-gradient(135deg, var(--secondary), #ff3d5f);
+            color: white;
+            border: none;
+            padding: 1.1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .form-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(233, 69, 96, 0.4);
+        }
+        
+        /* قسم المقارنة بين البطاقات */
+        .comparison-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+        
+        .comparison-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card-option {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s;
+            border: 1px solid rgba(83, 52, 131, 0.3);
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        
+        .card-option:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(83, 52, 131, 0.6);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--accent), #3a2670);
+            color: white;
+            text-align: center;
+            padding: 1.8rem;
+        }
+        
+        .card-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--gold);
+            color: var(--dark);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .card-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .card-features li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .card-features li i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 50%;
+            color: var(--secondary);
+        }
+        
+        .price-tag {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 1.5rem 0;
+        }
+        
+        .price-tag span {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            display: block;
+            margin-top: 0.3rem;
+        }
+        
+        .card-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary), #ff3d5f);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        
+        .card-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        /* قسم الميزات */
+        .features-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            border: 1px solid rgba(83, 52, 131, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(83, 52, 131, 0.6);
+        }
+        
+        .feature-icon-large {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover .feature-icon-large {
+            transform: scale(1.1);
+            color: var(--secondary);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* قسم الأسئلة الشائعة */
+        .faq-section {
+            padding: 5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(83, 52, 131, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 52, 96, 0.4);
+            color: white;
+        }
+        
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+        
+        /* قسم الدعوة للشراء */
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent), #3a2670);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 4rem;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000') center/cover;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .cta-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cta-container p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .whatsapp-button {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(18, 140, 126, 0.3);
+        }
+        
+        .buy-button {
+            background: linear-gradient(135deg, var(--gold), #ffb700);
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(255, 183, 0, 0.3);
+        }
+        
+        .whatsapp-button:hover, 
+        .buy-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* التذييل */
+        .footer {
+            background: rgba(10, 36, 96, 0.8);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+            border-top: 1px solid rgba(83, 52, 131, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            color: var(--gold);
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* التجاوبية */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                flex-direction: column;
+                padding-top: 8rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .gift-badge {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 1.5rem;
+                display: block;
+                width: max-content;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* لغة إنجليزية */
+        body.en {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        body.en .form-group {
+            text-align: left;
+        }
+        
+        body.en .footer-column h3::after {
+            right: auto;
+            left: 0;
+        }
+        
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.5s ease;
+            border: 1px solid var(--accent);
+        }
+        
+        .popup-overlay.active .popup-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .popup-header {
+            background: linear-gradient(135deg, var(--accent), #3a2670);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .popup-header h3 {
+            font-size: 1.8rem;
+            color: white;
+            margin: 0;
+        }
+        
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .popup-close:hover {
+            background: var(--secondary);
+        }
+        
+        .popup-body {
+            padding: 2.5rem;
+            text-align: center;
+        }
+        
+        .popup-icon {
+            font-size: 4rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            animation: bounce 1s ease;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        .popup-body h4 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+        
+        .popup-body p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .popup-button {
+            background: linear-gradient(135deg, var(--secondary), #ff3d5f);
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .popup-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Popup -->
+    <div class="popup-overlay" id="popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <button class="popup-close" id="closePopup">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 id="popupTitle">تم ارسال طلبك بنجاح!</h3>
+            </div>
+            <div class="popup-body">
+                <div class="popup-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h4 id="popupHeading">شكراً لك!</h4>
+                <p id="popupMessage">تم استلام طلبك بنجاح. سوف نتصل بك خلال 24 ساعة لتأكيد تفاصيل البطاقة.</p>
+                <button class="popup-button" id="popupAction">
+                    <i class="fas fa-check"></i> حسناً
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- الترويسة المحسنة -->
+    <header class="header" id="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">M</div>
+                <h1>MAXSELL</h1>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#comparison">المقارنة</a></li>
+                <li><a href="#features">الميزات</a></li>
+                <li><a href="#faq">الأسئلة</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <button class="lang-switch" id="langSwitch">
+                    <i class="fas fa-globe"></i> English
+                </button>
+                <button class="cta-button" onclick="document.getElementById('orderForm').scrollIntoView()">
+                    <i class="fas fa-shopping-cart"></i> اشتري الآن
+                </button>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- القسم الرئيسي مع الاستمارة -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>بطاقة RedotPay - بوابة عالم المدفوعات الرقمية</h2>
+            <p>استمتع بحرية الدفع في أي مكان وزمان مع بطاقة RedotPay المدفوعة مسبقاً. حلول دفع آمنة وسريعة تلبي جميع احتياجاتك في العالم الرقمي.</p>
+            <p class="hero-highlight">احصل الآن على <span>5 دولار هدية</span> مشحونة على بطاقتك مع كل عملية شراء!</p>
+            <div class="hero-buttons">
+                <button class="cta-button" onclick="document.getElementById('orderForm').scrollIntoView()">
+                    ابدأ الآن <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="order-form">
+            <div class="gift-badge">
+                <i class="fas fa-gift"></i> هدية 5 دولار مع كل بطاقة!
+            </div>
+            <h3 class="form-title">طلب بطاقة RedotPay</h3>
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="lastName">اللقب</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="firstName">الاسم</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="hasCard">هل لديك بطاقة من قبل؟</label>
+                    <select id="hasCard" required>
+                        <option value="">اختر...</option>
+                        <option value="yes">نعم</option>
+                        <option value="no">لا</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="birthdate">تاريخ الميلاد</label>
+                    <input type="date" id="birthdate" required>
+                </div>
+                <div class="form-group">
+                    <label for="cardType">نوع البطاقة</label>
+                    <select id="cardType" required>
+                        <option value="">اختر نوع البطاقة</option>
+                        <option value="virtual">بطاقة افتراضية (10 دولار)</option>
+                        <option value="plastic">بطاقة بلاستيكية (100 دولار)</option>
+                    </select>
+                </div>
+                <button type="submit" class="form-submit">
+                    <i class="fas fa-paper-plane"></i> إرسال الطلب
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- قسم المقارنة بين البطاقات -->
+    <section id="comparison" class="comparison-section">
+        <div class="section-title">
+            <h2>مقارنة بين بطاقات RedotPay</h2>
+            <p>اختر البطاقة المناسبة لاحتياجاتك</p>
+        </div>
+        
+        <div class="comparison-container">
+            <div class="card-option">
+                <div class="card-badge">الأكثر طلباً</div>
+                <div class="card-header">
+                    <h3>البطاقة الافتراضية</h3>
+                    <p>للدفع الإلكتروني الفوري</p>
+                </div>
+                <div class="card-body">
+                    <ul class="card-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>التداول عبر الإنترنت</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>شحن رصيد الألعاب</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>شحن رصيد تيك توك</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>الشراء من المتاجر الإلكترونية</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-times-circle" style="color:#dc3545"></i>
+                            <span>السحب من الصراف الآلي</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>الوصول الفوري بعد الشراء</span>
+                        </li>
+                    </ul>
+                    <div class="price-tag">
+                        1900 دج
+                        <span>(10 دولار مع التخفيض)</span>
+                    </div>
+                    <a href="#orderForm" class="card-button">اختر البطاقة</a>
+                </div>
+            </div>
+            
+            <div class="card-option">
+                <div class="card-header" style="background:linear-gradient(135deg, #0f3460, #1a1a2e)">
+                    <h3>البطاقة البلاستيكية</h3>
+                    <p>للحصول على بطاقة ملموسة</p>
+                </div>
+                <div class="card-body">
+                    <ul class="card-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>التداول عبر الإنترنت</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>شحن رصيد الألعاب</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>شحن رصيد تيك توك</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>الشراء من المتاجر الإلكترونية</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>السحب من الصراف الآلي</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock" style="color:#ffc107"></i>
+                            <span>تستغرق 3 أشهر للحصول عليها</span>
+                        </li>
+                    </ul>
+                    <div class="price-tag">
+                        13,500 دج
+                        <span>(100 دولار)</span>
+                    </div>
+                    <a href="#orderForm" class="card-button">اختر البطاقة</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title" style="margin-top: 4rem;">
+            <h2>لماذا البطاقة الافتراضية هي الخيار الأمثل؟</h2>
+            <p>اكتشف المميزات التي تجعل البطاقة الافتراضية أفضل اختيار</p>
+        </div>
+        
+        <div style="text-align: center; max-width: 800px; margin: 0 auto; padding: 2rem; background: rgba(26, 26, 46, 0.5); border-radius: 15px; border-left: 4px solid var(--gold);">
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                نظراً لأن خدمة السحب من الصراف الآلي غير متوفرة في الجزائر، فإن البطاقة الافتراضية تقدم لك جميع الميزات التي تحتاجها بسعر مناسب جداً. بالإضافة إلى ذلك، تحصل على:
+            </p>
+            <ul style="text-align: right; margin: 1.5rem 0; padding-right: 2rem;">
+                <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;">
+                    <span class="feature-icon"><i class="fas fa-bolt"></i></span>
+                    الوصول الفوري إلى البطاقة بعد الشراء
+                </li>
+                <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem;">
+                    <span class="feature-icon"><i class="fas fa-gift"></i></span>
+                    هدية 5 دولار مشحونة على البطاقة
+                </li>
+                <li style="display: flex; align-items: center; gap: 0.8rem;">
+                    <span class="feature-icon"><i class="fas fa-globe"></i></span>
+                    إمكانية استخدامها فوراً في جميع المتاجر والمواقع الإلكترونية
+                </li>
+            </ul>
+            <p style="margin-top: 1.5rem; font-weight: 700; color: var(--gold);">
+                البطاقة الافتراضية هي الحل الأمثل للدفع الإلكتروني الآمن والسريع دون الحاجة لانتظار الشحن.
+            </p>
+        </div>
+    </section>
+
+    <!-- قسم الميزات -->
+    <section id="features" class="features-section">
+        <div class="section-title">
+            <h2>استخدامات بطاقة RedotPay</h2>
+            <p>استفد من بطاقتك في مختلف المجالات والخدمات</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>التداول</h3>
+                <p>تمويل حسابات التداول والاستثمار في البورصات العالمية بسهولة وأمان</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>شحن الألعاب</h3>
+                <p>شراء بطاقات شحن لجميع الألعاب الإلكترونية مثل فورتنايت وببجي</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon-large">
+                    <i class="fab fa-tiktok"></i>
+                </div>
+                <h3>شحن تيك توك</h3>
+                <p>شراء العملات داخل تطبيق تيك توك لهدايا البث المباشر</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-plane"></i>
+                </div>
+                <h3>السفر</h3>
+                <p>حجز تذاكر الطيران والفنادق حول العالم بسهولة</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3>المتاجر الإلكترونية</h3>
+                <p>الشراء من أمازون، إيباي، وعشرات المتاجر العالمية</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon-large">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h3>هدية 5 دولار</h3>
+                <p>احصل على 5 دولار مشحونة على بطاقتك كهدية مع كل عملية شراء</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأسئلة الشائعة -->
+    <section id="faq" class="faq-section">
+        <div class="section-title">
+            <h2>أسئلة شائعة</h2>
+            <p>إجابات على أكثر الأسئلة شيوعاً حول بطاقات RedotPay</p>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                كيف يمكنني الحصول على بطاقة RedotPay؟ 
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>يمكنك طلب بطاقة RedotPay مباشرة من خلال موقع MAXSELL. بعد تعبئة نموذج الطلب والتحقق من معلوماتك، ستتلقى تفاصيل بطاقتك على بريدك الإلكتروني خلال 24 ساعة.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                كيف يمكنني شحن رصيد بطاقتي؟ 
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>نوفر خدمة شحن البطاقة بسهولة! ما عليك سوى التواصل معنا عبر الواتساب على الرقم +213552784799 أو عبر البريد الإلكتروني ziroz1385@gmail.com وسنقوم بشحن رصيدك فوراً.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                هل يمكنني استخدام البطاقة خارج بلدي؟ 
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>نعم، بطاقات RedotPay مقبولة عالمياً في جميع المتاجر والمواقع الإلكترونية التي تقبل البطاقات الدولية. يمكنك استخدامها في أي مكان حول العالم.</p>
+            </div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question" onclick="toggleFaq(this)">
+                هل توجد عروض وخصومات؟ 
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>نعم! نوفر عروضاً مختلفة وأسعاراً تنافسية باستمرار. حالياً، لدينا عرض خاص على البطاقات الافتراضية بسعر 1900 دج بدلاً من 2500 دج. كما تحصل على 5 دولار هدية مشحونة على البطاقة مع كل عملية شراء.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الدعوة للشراء -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2>جاهز لطلب بطاقتك؟</h2>
+            <p>اختر الطريقة المناسبة لك للتواصل معنا وطلب بطاقتك الآن</p>
+            
+            <div class="cta-buttons">
+                <button class="whatsapp-button" onclick="window.open('https://wa.me/213552784799', '_blank')">
+                    <i class="fab fa-whatsapp"></i> تواصل عبر الواتساب
+                </button>
+                <button class="buy-button" onclick="document.getElementById('orderForm').scrollIntoView()">
+                    <i class="fas fa-shopping-cart"></i> اشتري الآن
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer id="contact" class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>عن MAXSELL</h3>
+                <p>نقدم حلول دفع مبتكرة وآمنة للعملاء في الجزائر. مهمتنا هي تبسيط المعاملات المالية وجعلها أكثر أماناً وسهولة.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="#comparison">مقارنة البطاقات</a></li>
+                    <li><a href="#features">الميزات</a></li>
+                    <li><a href="#faq">الأسئلة الشائعة</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>اتصل بنا</h3>
+                <ul class="footer-links">
+                    <li><i class="fab fa-whatsapp"></i> +213552784799</li>
+                    <li><i class="fas fa-envelope"></i> ziroz1385@gmail.com</li>
+                    <li><i class="fas fa-headset"></i> الدعم الفني متاح 24/7</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2023 MAXSELL - جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+
+    <script>
+        // وظيفة للأسئلة الشائعة
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            answer.classList.toggle('active');
+            const icon = element.querySelector('i');
+            if (answer.classList.contains('active')) {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+        
+        // متغير لتتبع الطلبات المرسلة
+        const submittedRequests = new Set();
+        
+        // وظيفة إرسال النموذج
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // الحصول على رقم الهاتف
+            const phone = document.getElementById('phone').value;
+            
+            // التحقق من تكرار الطلب
+            if (submittedRequests.has(phone)) {
+                showPopup('طلب مكرر', 'تم تقديم الطلب من قبل', 'تم استلام طلبك مسبقاً ولا داعي لإرساله مرة أخرى. سوف نتصل بك خلال 24 ساعة لتأكيد تفاصيل البطاقة.');
+            } else {
+                // إضافة الطلب إلى مجموعة الطلبات المرسلة
+                submittedRequests.add(phone);
+                
+                // إظهار رسالة النجاح
+                showPopup('تم ارسال طلبك بنجاح!', 'شكراً لك!', 'تم استلام طلبك بنجاح. سوف نتصل بك خلال 24 ساعة لتأكيد تفاصيل البطاقة.');
+                
+                // إعادة تعيين النموذج
+                this.reset();
+            }
+        });
+        
+        // وظيفة إظهار البوب أب
+        function showPopup(title, heading, message) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupHeading').textContent = heading;
+            document.getElementById('popupMessage').textContent = message;
+            document.getElementById('popup').classList.add('active');
+        }
+        
+        // وظيفة إغلاق البوب أب
+        document.getElementById('closePopup').addEventListener('click', function() {
+            document.getElementById('popup').classList.remove('active');
+        });
+        
+        document.getElementById('popupAction').addEventListener('click', function() {
+            document.getElementById('popup').classList.remove('active');
+        });
+        
+        // وظيفة التمرير السلس
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // تبديل اللغة
+        document.getElementById('langSwitch').addEventListener('click', function() {
+            document.body.classList.toggle('en');
+            if (document.body.classList.contains('en')) {
+                this.innerHTML = '<i class="fas fa-globe"></i> العربية';
+            } else {
+                this.innerHTML = '<i class="fas fa-globe"></i> English';
+            }
+        });
+        
+        // تأثير الترويسة عند التمرير
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // تحريك شريط الصور تلقائياً
+        const slider = document.querySelector('.image-slider');
+        if (slider) {
+            let scrollAmount = 0;
+            const slideTimer = setInterval(function() {
+                slider.scrollLeft += 2;
+                scrollAmount += 2;
+                
+                if (scrollAmount >= slider.scrollWidth / 2) {
+                    slider.scrollLeft = 0;
+                    scrollAmount = 0;
+                }
+            }, 50);
+        }
+    </script>
+</body>
+</html>
