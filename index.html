@@ -1008,6 +1008,47 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
         }
+        
+        /* أزرار شحن البطاقة */
+        .recharge-button {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(18, 140, 126, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem auto 0;
+        }
+
+        .recharge-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(18, 140, 126, 0.4);
+        }
+        
+        .recharge-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .recharge-info p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .recharge-info .highlight {
+            color: var(--gold);
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -1031,6 +1072,50 @@
                 <button class="popup-button" id="popupAction">
                     <i class="fas fa-check"></i> حسناً
                 </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Popup جديد لشحن البطاقة -->
+    <div class="popup-overlay" id="rechargePopup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <button class="popup-close" id="closeRechargePopup">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3>شحن بطاقة RedotPay</h3>
+            </div>
+            <div class="popup-body">
+                <div class="popup-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <div class="recharge-info">
+                    <p><strong>السعر الحالي:</strong> <span class="highlight">1 دولار = 260 دج</span></p>
+                    <p><strong>الحد الأدنى للشحن:</strong> <span class="highlight">3 دولار (780 دج)</span></p>
+                </div>
+                <form id="rechargeForm">
+                    <div class="form-group">
+                        <label for="uid">رقم UID</label>
+                        <input type="text" id="uid" required placeholder="أدخل رقم UID الخاص ببطاقتك">
+                    </div>
+                    <div class="form-group">
+                        <label for="currency">العملة</label>
+                        <select id="currency" required onchange="calculateAmount()">
+                            <option value="dzd">الدينار الجزائري (دج)</option>
+                            <option value="usd">الدولار الأمريكي ($)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" id="amountLabel">المبلغ (دج)</label>
+                        <input type="number" id="amount" required min="780" oninput="calculateAmount()" placeholder="أدخل المبلغ">
+                        <p id="convertedAmount" style="margin-top: 0.5rem; color: var(--gold);">
+                            المبلغ بالدولار: 0 $
+                        </p>
+                    </div>
+                    <button type="submit" class="popup-button">
+                        <i class="fas fa-paper-plane"></i> إرسال طلب الشحن
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -1322,7 +1407,7 @@
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-                <p>نوفر خدمة شحن البطاقة بسهولة! ما عليك سوى التواصل معنا عبر الواتساب على الرقم +213552784799 أو عبر البريد الإلكتروني ziroz1385@gmail.com وسنقوم بشحن رصيدك فوراً.</p>
+                <p>نوفر خدمة شحن البطاقة بسهولة! ما عليك سى التواصل معنا عبر الواتساب على الرقم +213552784799 أو عبر البريد الإلكتروني ziroz1385@gmail.com وسنقوم بشحن رصيدك فوراً.</p>
             </div>
         </div>
         
@@ -1396,6 +1481,10 @@
         </div>
         <div class="copyright">
             <p>© 2023 MAXSELL - جميع الحقوق محفوظة.</p>
+            <!-- زر شحن البطاقة المضاف -->
+            <button class="recharge-button" id="rechargeBtn">
+                <i class="fas fa-bolt"></i> شحن بطاقة RedotPay
+            </button>
         </div>
     </footer>
 
@@ -1417,12 +1506,17 @@
         // متغير لتتبع الطلبات المرسلة
         const submittedRequests = new Set();
         
-        // وظيفة إرسال النموذج
+        // وظيفة إرسال النموذج إلى الواتساب
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // الحصول على رقم الهاتف
+            // جمع بيانات النموذج
+            const lastName = document.getElementById('lastName').value;
+            const firstName = document.getElementById('firstName').value;
             const phone = document.getElementById('phone').value;
+            const hasCard = document.getElementById('hasCard').value;
+            const birthdate = document.getElementById('birthdate').value;
+            const cardType = document.getElementById('cardType').value;
             
             // التحقق من تكرار الطلب
             if (submittedRequests.has(phone)) {
@@ -1431,8 +1525,17 @@
                 // إضافة الطلب إلى مجموعة الطلبات المرسلة
                 submittedRequests.add(phone);
                 
+                // بناء رسالة الواتساب
+                const message = `طلب بطاقة RedotPay جديد%0A%0Aالاسم: ${firstName} ${lastName}%0Aرقم الهاتف: ${phone}%0Aهل لديك بطاقة من قبل؟: ${hasCard}%0Aتاريخ الميلاد: ${birthdate}%0Aنوع البطاقة: ${cardType}`;
+                
+                // إنشاء رابط الواتساب
+                const whatsappLink = `https://wa.me/213552784799?text=${message}`;
+                
+                // فتح رابط الواتساب في نافذة جديدة
+                window.open(whatsappLink, '_blank');
+                
                 // إظهار رسالة النجاح
-                showPopup('تم ارسال طلبك بنجاح!', 'شكراً لك!', 'تم استلام طلبك بنجاح. سوف نتصل بك خلال 24 ساعة لتأكيد تفاصيل البطاقة.');
+                showPopup('تم ارسال طلبك بنجاح!', 'شكراً لك!', 'تم إرسال طلبك إلى خدمة العملاء عبر الواتساب. سوف نتصل بك خلال 24 ساعة لتأكيد تفاصيل البطاقة.');
                 
                 // إعادة تعيين النموذج
                 this.reset();
@@ -1486,20 +1589,68 @@
             }
         });
         
-        // تحريك شريط الصور تلقائياً
-        const slider = document.querySelector('.image-slider');
-        if (slider) {
-            let scrollAmount = 0;
-            const slideTimer = setInterval(function() {
-                slider.scrollLeft += 2;
-                scrollAmount += 2;
-                
-                if (scrollAmount >= slider.scrollWidth / 2) {
-                    slider.scrollLeft = 0;
-                    scrollAmount = 0;
-                }
-            }, 50);
+        // وظائف جديدة لشحن البطاقة
+        document.getElementById('rechargeBtn').addEventListener('click', function() {
+            document.getElementById('rechargePopup').classList.add('active');
+        });
+
+        document.getElementById('closeRechargePopup').addEventListener('click', function() {
+            document.getElementById('rechargePopup').classList.remove('active');
+        });
+
+        // وظيفة لحساب المبلغ المكافئ
+        function calculateAmount() {
+            const currency = document.getElementById('currency').value;
+            const amountInput = document.getElementById('amount');
+            const convertedAmount = document.getElementById('convertedAmount');
+            
+            if (currency === 'dzd') {
+                document.getElementById('amountLabel').textContent = 'المبلغ (دج)';
+                amountInput.min = 780;
+                const usdAmount = (amountInput.value / 260).toFixed(2);
+                convertedAmount.textContent = `المبلغ بالدولار: ${usdAmount} $`;
+            } else {
+                document.getElementById('amountLabel').textContent = 'المبلغ ($)';
+                amountInput.min = 3;
+                const dzdAmount = (amountInput.value * 260).toFixed(0);
+                convertedAmount.textContent = `المبلغ بالدينار: ${dzdAmount} دج`;
+            }
         }
+
+        // وظيفة إرسال طلب الشحن
+        document.getElementById('rechargeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const uid = document.getElementById('uid').value;
+            const currency = document.getElementById('currency').value;
+            const amount = document.getElementById('amount').value;
+            
+            // التحقق من الحد الأدنى
+            const minAmount = currency === 'dzd' ? 780 : 3;
+            if (parseFloat(amount) < minAmount) {
+                const minText = currency === 'dzd' ? '780 دج' : '3 دولار';
+                showPopup('خطأ', 'المبلغ غير كافي', `الحد الأدنى للشحن هو ${minText}. يرجى إدخال مبلغ أكبر.`);
+                return;
+            }
+            
+            // بناء رسالة الواتساب
+            const currencyText = currency === 'dzd' ? 'دج' : '$';
+            const message = `طلب شحن بطاقة RedotPay%0A%0Aرقم UID: ${uid}%0Aالعملة: ${currencyText}%0Aالمبلغ: ${amount} ${currencyText}`;
+            
+            // إنشاء رابط الواتساب
+            const whatsappLink = `https://wa.me/213552784799?text=${message}`;
+            
+            // فتح رابط الواتساب في نافذة جديدة
+            window.open(whatsappLink, '_blank');
+            
+            // إظهار رسالة التأكيد
+            showPopup('تم إرسال الطلب', 'شكراً لك!', 'تم إرسال طلب شحن بطاقتك إلى خدمة العملاء عبر الواتساب. جاري انتظار الرد من أحد ممثلينا.');
+            
+            // إعادة تعيين النموذج وإغلاق البوب آب
+            this.reset();
+            document.getElementById('convertedAmount').textContent = 'المبلغ بالدولار: 0 $';
+            document.getElementById('rechargePopup').classList.remove('active');
+        });
     </script>
 </body>
 </html>
