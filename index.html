@@ -94,27 +94,10 @@
             transform: scale(1.03);
         }
         
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--gold), #ffb700);
-            border-radius: 12px;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--dark);
+        .logo img {
+            height: 60px;
+            border-radius: 10px;
             box-shadow: 0 5px 15px rgba(255, 183, 0, 0.3);
-        }
-        
-        .logo h1 {
-            font-size: 1.8rem;
-            background: linear-gradient(to right, var(--gold), #ffb700);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .nav-links {
@@ -600,6 +583,210 @@
             color: rgba(255, 255, 255, 0.8);
         }
         
+        /* قسم تعليقات العملاء - تصميم جديد مذهل */
+        .testimonials-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #3a2670, #0f3460);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonials-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070') center/cover;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            height: 350px;
+            z-index: 1;
+        }
+        
+        .testimonial {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transform: scale(0.9);
+        }
+        
+        .testimonial.active {
+            opacity: 1;
+            z-index: 1;
+            transform: scale(1);
+        }
+        
+        .testimonial-content {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            position: relative;
+            padding: 0 1.5rem;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            line-height: 1.8;
+        }
+        
+        .testimonial-content::before,
+        .testimonial-content::after {
+            content: '"';
+            font-size: 5rem;
+            color: var(--gold);
+            opacity: 0.3;
+            position: absolute;
+            font-family: serif;
+        }
+        
+        .testimonial-content::before {
+            top: -30px;
+            left: -10px;
+        }
+        
+        .testimonial-content::after {
+            bottom: -60px;
+            right: -10px;
+        }
+        
+        .client-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .client-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--gold);
+            border: 3px solid var(--gold);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .client-details {
+            text-align: center;
+        }
+        
+        .client-name {
+            font-weight: 700;
+            color: var(--gold);
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .client-location {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .rating {
+            display: flex;
+            gap: 0.3rem;
+            margin-top: 0.8rem;
+            justify-content: center;
+        }
+        
+        .rating i {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        
+        .testimonial-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .testimonial-nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .testimonial-nav-btn:hover {
+            background: var(--gold);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .testimonial-dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-dot::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gold);
+            transition: width 5s linear;
+        }
+        
+        .testimonial-dot.active {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.2);
+        }
+        
+        .testimonial-dot.active::after {
+            width: 100%;
+        }
+        
         /* قسم الأسئلة الشائعة */
         .faq-section {
             padding: 5rem 2rem;
@@ -877,6 +1064,23 @@
                 padding: 0.6rem 1rem;
                 font-size: 0.8rem;
             }
+            
+            .testimonials-section {
+                padding: 3rem 1rem;
+            }
+            
+            .testimonial {
+                padding: 1.5rem;
+            }
+            
+            .testimonial-content {
+                font-size: 1.1rem;
+            }
+            
+            .testimonial-nav-btn {
+                width: 40px;
+                height: 40px;
+            }
         }
         
         /* Animations */
@@ -1061,6 +1265,21 @@
             color: var(--gold);
             font-weight: 700;
         }
+        
+        /* رسائل التحقق */
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+        
+        .note {
+            color: #ffcc00;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -1132,17 +1351,17 @@
         </div>
     </div>
     
-    <!-- الترويسة المحسنة مع زر الشحن الجديد -->
+    <!-- الترويسة المحسنة مع اللوغو الجديد -->
     <header class="header" id="header">
         <div class="nav-container">
             <a href="#" class="logo">
-                <div class="logo-icon">M</div>
-                <h1>MAXSELL</h1>
+                <img src="https://raw.githubusercontent.com/imagesloads/images/refs/heads/main/img_0a1a7765ea18f704.jpg" alt="MAXSELL Logo">
             </a>
             
             <ul class="nav-links">
                 <li><a href="#comparison">المقارنة</a></li>
                 <li><a href="#features">الميزات</a></li>
+                <li><a href="#testimonials">آراء العملاء</a></li>
                 <li><a href="#faq">الأسئلة</a></li>
                 <li><a href="#contact">اتصل بنا</a></li>
             </ul>
@@ -1194,7 +1413,8 @@
                 </div>
                 <div class="form-group">
                     <label for="phone">رقم الهاتف</label>
-                    <input type="tel" id="phone" required>
+                    <input type="tel" id="phone" required placeholder="مثال: 0555555555">
+                    <div class="error-message" id="phoneError">يرجى إدخال رقم هاتف جزائري صحيح (10 أرقام)</div>
                 </div>
                 <div class="form-group">
                     <label for="hasCard">هل لديك بطاقة من قبل؟</label>
@@ -1207,6 +1427,17 @@
                 <div class="form-group">
                     <label for="birthdate">تاريخ الميلاد</label>
                     <input type="date" id="birthdate" required>
+                    <div class="error-message" id="ageError">يجب أن يكون عمرك 18 سنة أو أكثر</div>
+                </div>
+                <div class="form-group">
+                    <label for="documentType">وثيقة التحقق</label>
+                    <select id="documentType" required>
+                        <option value="">اختر وثيقة التحقق</option>
+                        <option value="id">بطاقة التعريف</option>
+                        <option value="passport">جواز السفر</option>
+                        <option value="driver">رخصة السياقة</option>
+                    </select>
+                    <span class="note">يجب أن تكون الوثيقة غير منتهية الصلاحية</span>
                 </div>
                 <div class="form-group">
                     <label for="cardType">نوع البطاقة</label>
@@ -1400,6 +1631,128 @@
         </div>
     </section>
 
+    <!-- قسم آراء العملاء - تصميم جديد مذهل -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="section-title">
+            <h2>تجارب عملائنا</h2>
+            <p>قصص نجاح ورضا من مستخدمي بطاقات RedotPay</p>
+        </div>
+        
+        <div class="testimonials-container">
+            <div class="testimonial active">
+                <div class="testimonial-content">
+                    لقد كانت تجربة رائعة مع بطاقة RedotPay! تمكنت من شحن رصيد ألعابي بسهولة وسرعة، والخدمة كانت ممتازة من البداية حتى النهاية. فريق الدعم سريع الاستجابة ومحترف.
+                </div>
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="client-details">
+                        <div class="client-name">أحمد ب.</div>
+                        <div class="client-location">
+                            <i class="fas fa-map-marker-alt"></i> الجزائر العاصمة
+                        </div>
+                    </div>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    البطاقة الافتراضية سهلت عليّ عمليات الشراء من المواقع العالمية، خاصة مع الهدية التي حصلت عليها. الآن أستطيع التسوق من أي موقع عالمي دون مشاكل. أنصح الجميع بتجربتها.
+                </div>
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="client-details">
+                        <div class="client-name">فاطمة ز.</div>
+                        <div class="client-location">
+                            <i class="fas fa-map-marker-alt"></i> وهران
+                        </div>
+                    </div>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    أفضل حل للدفع الإلكتروني في الجزائر! استخدمت البطاقة لشحن تيك توك والتداول، كل شيء يعمل بسلاسة. عملية الشحن كانت سريعة وفعالة، حصلت على بطاقتي خلال ساعات. الخدمة تستحق الخمس نجوم بجدارة!
+                </div>
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="client-details">
+                        <div class="client-name">خالد م.</div>
+                        <div class="client-location">
+                            <i class="fas fa-map-marker-alt"></i> قسنطينة
+                        </div>
+                    </div>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-content">
+                    جربت العديد من الحلول للدفع الإلكتروني، ولكن بطاقة RedotPay فاقت توقعاتي. سهولة الاستخدام، سرعة التنفيذ، وأسعار تنافسية. بالإضافة إلى ذلك، فريق الدعم كان متاحاً على مدار الساعة لمساعدتي.
+                </div>
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="client-details">
+                        <div class="client-name">سميرة ت.</div>
+                        <div class="client-location">
+                            <i class="fas fa-map-marker-alt"></i> عنابة
+                        </div>
+                    </div>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="testimonial-nav">
+            <button class="testimonial-nav-btn" id="prevTestimonial">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <button class="testimonial-nav-btn" id="nextTestimonial">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        
+        <div class="testimonial-dots">
+            <span class="testimonial-dot active" data-index="0"></span>
+            <span class="testimonial-dot" data-index="1"></span>
+            <span class="testimonial-dot" data-index="2"></span>
+            <span class="testimonial-dot" data-index="3"></span>
+        </div>
+    </section>
+
     <!-- قسم الأسئلة الشائعة -->
     <section id="faq" class="faq-section">
         <div class="section-title">
@@ -1482,6 +1835,7 @@
                 <ul class="footer-links">
                     <li><a href="#comparison">مقارنة البطاقات</a></li>
                     <li><a href="#features">الميزات</a></li>
+                    <li><a href="#testimonials">آراء العملاء</a></li>
                     <li><a href="#faq">الأسئلة الشائعة</a></li>
                     <li><a href="#contact">اتصل بنا</a></li>
                 </ul>
@@ -1518,6 +1872,24 @@
         // متغير لتتبع الطلبات المرسلة
         const submittedRequests = new Set();
         
+        // وظيفة حساب العمر
+        function calculateAge(birthDate) {
+            const today = new Date();
+            const birth = new Date(birthDate);
+            let age = today.getFullYear() - birth.getFullYear();
+            const m = today.getMonth() - birth.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+                age--;
+            }
+            return age;
+        }
+        
+        // التحقق من رقم الهاتف الجزائري
+        function isValidAlgerianPhone(phone) {
+            const regex = /^(00213|\+213|0)(5|6|7)[0-9]{8}$/;
+            return regex.test(phone);
+        }
+        
         // وظيفة إرسال النموذج إلى الواتساب
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1528,7 +1900,25 @@
             const phone = document.getElementById('phone').value;
             const hasCard = document.getElementById('hasCard').value;
             const birthdate = document.getElementById('birthdate').value;
+            const documentType = document.getElementById('documentType').value;
             const cardType = document.getElementById('cardType').value;
+            
+            // إخفاء رسائل الخطأ
+            document.getElementById('phoneError').style.display = 'none';
+            document.getElementById('ageError').style.display = 'none';
+            
+            // التحقق من صحة الهاتف
+            if (!isValidAlgerianPhone(phone)) {
+                document.getElementById('phoneError').style.display = 'block';
+                return;
+            }
+            
+            // التحقق من العمر
+            const age = calculateAge(birthdate);
+            if (age < 18) {
+                document.getElementById('ageError').style.display = 'block';
+                return;
+            }
             
             // التحقق من تكرار الطلب
             if (submittedRequests.has(phone)) {
@@ -1538,7 +1928,7 @@
                 submittedRequests.add(phone);
                 
                 // بناء رسالة الواتساب
-                const message = `طلب بطاقة RedotPay جديد%0A%0Aالاسم: ${firstName} ${lastName}%0Aرقم الهاتف: ${phone}%0Aهل لديك بطاقة من قبل؟: ${hasCard}%0Aتاريخ الميلاد: ${birthdate}%0Aنوع البطاقة: ${cardType}`;
+                const message = `طلب بطاقة RedotPay جديد%0A%0Aالاسم: ${firstName} ${lastName}%0Aرقم الهاتف: ${phone}%0Aهل لديك بطاقة من قبل؟: ${hasCard}%0Aتاريخ الميلاد: ${birthdate}%0Aوثيقة التحقق: ${documentType}%0Aنوع البطاقة: ${cardType}`;
                 
                 // إنشاء رابط الواتساب
                 const whatsappLink = `https://wa.me/213552784799?text=${message}`;
@@ -1662,6 +2052,108 @@
             this.reset();
             document.getElementById('convertedAmount').textContent = 'المبلغ بالدولار: 0 $';
             document.getElementById('rechargePopup').classList.remove('active');
+        });
+        
+        // قسم تعليقات العملاء
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const dots = document.querySelectorAll('.testimonial-dot');
+        
+        function showTestimonial(index) {
+            testimonials.forEach(testimonial => testimonial.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            testimonials[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentTestimonial = index;
+            
+            // إعادة تشغيل مؤقت الشريط
+            dots.forEach(dot => {
+                dot.style.setProperty('--progress', '0%');
+            });
+            
+            // بدء المؤقت للشريط
+            setTimeout(() => {
+                dots[index].style.setProperty('--progress', '100%');
+            }, 10);
+        }
+        
+        // التبديل التلقائي للتعليقات
+        let testimonialInterval = setInterval(() => {
+            let nextIndex = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(nextIndex);
+        }, 5000);
+        
+        // إضافة أحداث النقر على النقاط
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.getAttribute('data-index'));
+                showTestimonial(index);
+                
+                // إعادة تشغيل المؤقت التلقائي
+                clearInterval(testimonialInterval);
+                testimonialInterval = setInterval(() => {
+                    let nextIndex = (currentTestimonial + 1) % testimonials.length;
+                    showTestimonial(nextIndex);
+                }, 5000);
+            });
+        });
+        
+        // أزرار التنقل بين التعليقات
+        document.getElementById('prevTestimonial').addEventListener('click', function() {
+            let prevIndex = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(prevIndex);
+            
+            // إعادة تشغيل المؤقت التلقائي
+            clearInterval(testimonialInterval);
+            testimonialInterval = setInterval(() => {
+                let nextIndex = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(nextIndex);
+            }, 5000);
+        });
+        
+        document.getElementById('nextTestimonial').addEventListener('click', function() {
+            let nextIndex = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(nextIndex);
+            
+            // إعادة تشغيل المؤقت التلقائي
+            clearInterval(testimonialInterval);
+            testimonialInterval = setInterval(() => {
+                let nextIndex = (currentTestimonial + 1) % testimonials.length;
+                showTestimonial(nextIndex);
+            }, 5000);
+        });
+        
+        // إضافة تحقق عند تغيير تاريخ الميلاد
+        document.getElementById('birthdate').addEventListener('change', function() {
+            const age = calculateAge(this.value);
+            const errorElement = document.getElementById('ageError');
+            
+            if (age < 18) {
+                errorElement.style.display = 'block';
+            } else {
+                errorElement.style.display = 'none';
+            }
+        });
+        
+        // إضافة تحقق عند تغيير رقم الهاتف
+        document.getElementById('phone').addEventListener('input', function() {
+            const isValid = isValidAlgerianPhone(this.value);
+            const errorElement = document.getElementById('phoneError');
+            
+            if (!isValid) {
+                errorElement.style.display = 'block';
+            } else {
+                errorElement.style.display = 'none';
+            }
+        });
+        
+        // بدء المؤقت للشريط عند التحميل
+        window.addEventListener('load', function() {
+            const activeDot = document.querySelector('.testimonial-dot.active');
+            if (activeDot) {
+                activeDot.style.setProperty('--progress', '100%');
+            }
         });
     </script>
 </body>
