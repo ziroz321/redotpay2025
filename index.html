@@ -16,6 +16,7 @@
             --dark: #1a1a2e;
             --gray: #6c757d;
             --success: #28a745;
+            --whatsapp: #25D366;
         }
         
         * {
@@ -176,6 +177,28 @@
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
+        }
+        
+        /* زر شحن البطاقة في الترويسة */
+        .recharge-header-button {
+            background: linear-gradient(135deg, var(--whatsapp), #128C7E);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(18, 140, 126, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .recharge-header-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(18, 140, 126, 0.4);
         }
         
         .lang-switch {
@@ -843,6 +866,17 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .nav-actions {
+                gap: 0.7rem;
+            }
+            
+            .recharge-header-button,
+            .cta-button,
+            .lang-switch {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
         }
         
         /* Animations */
@@ -1010,28 +1044,6 @@
         }
         
         /* أزرار شحن البطاقة */
-        .recharge-button {
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: white;
-            border: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            box-shadow: 0 4px 15px rgba(18, 140, 126, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 1rem auto 0;
-        }
-
-        .recharge-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(18, 140, 126, 0.4);
-        }
-        
         .recharge-info {
             background: rgba(255, 255, 255, 0.1);
             padding: 1rem;
@@ -1120,7 +1132,7 @@
         </div>
     </div>
     
-    <!-- الترويسة المحسنة -->
+    <!-- الترويسة المحسنة مع زر الشحن الجديد -->
     <header class="header" id="header">
         <div class="nav-container">
             <a href="#" class="logo">
@@ -1138,6 +1150,10 @@
             <div class="nav-actions">
                 <button class="lang-switch" id="langSwitch">
                     <i class="fas fa-globe"></i> English
+                </button>
+                <!-- زر شحن البطاقة في الترويسة -->
+                <button class="recharge-header-button" id="rechargeHeaderBtn">
+                    <i class="fas fa-bolt"></i> شحن البطاقة
                 </button>
                 <button class="cta-button" onclick="document.getElementById('orderForm').scrollIntoView()">
                     <i class="fas fa-shopping-cart"></i> اشتري الآن
@@ -1481,10 +1497,6 @@
         </div>
         <div class="copyright">
             <p>© 2023 MAXSELL - جميع الحقوق محفوظة.</p>
-            <!-- زر شحن البطاقة المضاف -->
-            <button class="recharge-button" id="rechargeBtn">
-                <i class="fas fa-bolt"></i> شحن بطاقة RedotPay
-            </button>
         </div>
     </footer>
 
@@ -1590,7 +1602,7 @@
         });
         
         // وظائف جديدة لشحن البطاقة
-        document.getElementById('rechargeBtn').addEventListener('click', function() {
+        document.getElementById('rechargeHeaderBtn').addEventListener('click', function() {
             document.getElementById('rechargePopup').classList.add('active');
         });
 
