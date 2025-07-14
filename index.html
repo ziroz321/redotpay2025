@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <link rel="icon" href="https://raw.githubusercontent.com/imagesloads/images/refs/heads/main/img_79d929c47efa0a6e.ico " type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAXSELL - بطاقات RedotPay المدفوعة مسبقاً</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <style>
+        /* أنماط أساسية */
         :root {
             --primary: #0f3460;
             --secondary: #e94560;
             --accent: #533483;
             --gold: #ffd700;
+            --silver: #c0c0c0;
             --light: #f8f9fa;
             --dark: #1a1a2e;
             --gray: #6c757d;
             --success: #28a745;
             --whatsapp: #25D366;
+            
+            /* ألوان للعروض */
+            --gold-gradient: linear-gradient(135deg, #ffd700, #d4af37);
+            --silver-gradient: linear-gradient(135deg, #c0c0c0, #a0a0a0);
         }
         
         * {
@@ -28,7 +33,7 @@
         
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #0a0a1a 0%, #050514 100%);
             color: white;
             line-height: 1.6;
             position: relative;
@@ -36,23 +41,28 @@
             min-height: 100vh;
         }
         
-        /* خلفية متحركة */
-        .animated-bg {
+        /* خلفية النجوم */
+        .stars-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2000') center/cover;
-            opacity: 0.03;
             z-index: -1;
-            animation: bgAnimation 30s linear infinite;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
         }
         
-        @keyframes bgAnimation {
-            0% { background-position: 0 0; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0 0; }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
         
         /* الترويسة المحسنة */
@@ -255,6 +265,10 @@
         .hero-highlight {
             color: var(--gold);
             font-weight: 700;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: inline-block;
         }
         
         .order-form {
@@ -1082,6 +1096,60 @@
                 width: 40px;
                 height: 40px;
             }
+            
+            /* تحسينات للجوال */
+            .card-option, .feature-card {
+                margin: 0 10px;
+            }
+            
+            .hero-content, .order-form {
+                padding: 20px;
+            }
+            
+            .footer-column {
+                text-align: center;
+            }
+            
+            .footer-column h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+            }
+            
+            .social-icons {
+                justify-content: center;
+            }
+        }
+        
+        /* تحسينات للشاشات الصغيرة جداً */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 8rem 1rem 3rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+            
+            .card-header h3 {
+                font-size: 1.5rem;
+            }
+            
+            .card-features li {
+                font-size: 0.9rem;
+            }
+            
+            .cta-container h2 {
+                font-size: 1.8rem;
+            }
         }
         
         /* Animations */
@@ -1281,10 +1349,314 @@
             margin-top: 0.5rem;
             display: block;
         }
+        
+        /* قسم كود الدعوة ورابط الإحالة */
+        .referral-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .referral-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .referral-card {
+            background: rgba(26, 26, 46, 0.7);
+            border-radius: 15px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--accent);
+            backdrop-filter: blur(5px);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+        
+        .referral-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .referral-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--secondary);
+        }
+        
+        .referral-title {
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+        
+        .referral-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .referral-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .referral-item h4 {
+            font-size: 1.2rem;
+            color: var(--gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .referral-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            word-break: break-all;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-top: 0.5rem;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, var(--accent), #3a2670);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(83, 52, 131, 0.4);
+        }
+        
+        /* قسم العروض الحصرية */
+        .offers-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .offers-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        
+        .offer-card {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: all 0.5s;
+        }
+        
+        .offer-card:hover {
+            transform: translateY(-15px) rotateY(5deg);
+        }
+        
+        .offer-card.golden {
+            background: var(--gold-gradient);
+        }
+        
+        .offer-card.silver {
+            background: var(--silver-gradient);
+        }
+        
+        .offer-header {
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .offer-card.golden .offer-header {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+        }
+        
+        .offer-card.silver .offer-header {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+        }
+        
+        .offer-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .offer-title {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .offer-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        
+        .offer-body {
+            padding: 2.5rem;
+            background: rgba(26, 26, 46, 0.9);
+            color: white;
+        }
+        
+        .offer-features {
+            margin-bottom: 2rem;
+        }
+        
+        .offer-features li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .offer-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .offer-features li i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+        
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .countdown-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 80px;
+        }
+        
+        .countdown-value {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .offer-btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .offer-card.golden .offer-btn {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            color: white;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        .offer-card.silver .offer-btn {
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            color: white;
+            box-shadow: 0 5px 15px rgba(192, 192, 192, 0.4);
+        }
+        
+        .offer-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* تعديلات استمارة الطلب */
+        #hasCardGroup {
+            display: none;
+        }
+        
+        /* تعديلات للعرض على الهواتف */
+        @media (max-width: 768px) {
+            .referral-container {
+                flex-direction: column;
+            }
+            
+            .offer-card {
+                max-width: 100%;
+            }
+            
+            .countdown {
+                gap: 0.5rem;
+            }
+            
+            .countdown-item {
+                min-width: 70px;
+                padding: 0.8rem;
+            }
+            
+            .countdown-value {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* تحسينات إضافية للنجوم */
+        @media (max-width: 768px) {
+            .star {
+                animation-duration: 8s !important;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="animated-bg"></div>
+    <!-- خلفية النجوم -->
+    <div class="stars-background" id="starsBackground"></div>
     
     <!-- Popup -->
     <div class="popup-overlay" id="popup">
@@ -1418,14 +1790,6 @@
                     <div class="error-message" id="phoneError">يرجى إدخال رقم هاتف جزائري صحيح (10 أرقام)</div>
                 </div>
                 <div class="form-group">
-                    <label for="hasCard">هل لديك بطاقة من قبل؟</label>
-                    <select id="hasCard" required>
-                        <option value="">اختر...</option>
-                        <option value="yes">نعم</option>
-                        <option value="no">لا</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label for="birthdate">تاريخ الميلاد</label>
                     <input type="date" id="birthdate" required>
                     <div class="error-message" id="ageError">يجب أن يكون عمرك 18 سنة أو أكثر</div>
@@ -1448,6 +1812,24 @@
                         <option value="plastic">بطاقة بلاستيكية (100 دولار)</option>
                     </select>
                 </div>
+                
+                <!-- حقل جديد: اسم الشخص الذي دعاك -->
+                <div class="form-group">
+                    <label for="referrerName">اسم الشخص الذي دعاك (اختياري)</label>
+                    <input type="text" id="referrerName" placeholder="إذا كان أحد قد دعاك لإفتح حساب">
+                </div>
+                
+                <!-- حقل جديد: هل لديك حساب مفعل؟ -->
+                <div class="form-group">
+                    <label for="hasAccount">هل لديك حساب مفعل في RedotPay؟</label>
+                    <select id="hasAccount" required>
+                        <option value="">اختر...</option>
+                        <option value="no">لا</option>
+                        <option value="yes-our-code">نعم، مفعل بالكود الخاص بنا</option>
+                        <option value="yes-other">نعم، ليس بالكود الخاص بنا</option>
+                    </select>
+                </div>
+                
                 <button type="submit" class="form-submit">
                     <i class="fas fa-paper-plane"></i> إرسال الطلب
                 </button>
@@ -1571,6 +1953,165 @@
             <p style="margin-top: 1.5rem; font-weight: 700; color: var(--gold);">
                 البطاقة الافتراضية هي الحل الأمثل للدفع الإلكتروني الآمن والسريع دون الحاجة لانتظار الشحن.
             </p>
+        </div>
+    </section>
+    
+    <!-- قسم كود الدعوة ورابط الإحالة -->
+    <section id="referral" class="referral-section">
+        <div class="section-title">
+            <h2>كود الدعوة ورابط الإحالة</h2>
+            <p>استخدم كود الدعوة أو الرابط أدناه لتحصل على المكافآت</p>
+        </div>
+        
+        <div class="referral-container">
+            <div class="referral-card">
+                <h3 class="referral-title">كود الدعوة ورابط الإحالة</h3>
+                <div class="referral-content">
+                    <div class="referral-item">
+                        <h4>كود الدعوة</h4>
+                        <div class="referral-value" id="referralCode">nw6bw</div>
+                        <button class="copy-btn" onclick="copyToClipboard('referralCode')">
+                            <i class="fas fa-copy"></i> نسخ الكود
+                        </button>
+                    </div>
+                    
+                    <div class="referral-item">
+                        <h4>رابط الإحالة</h4>
+                        <div class="referral-value" id="referralLink">https://url.hk/i/ar/nw6bw</div>
+                        <button class="copy-btn" onclick="copyToClipboard('referralLink')">
+                            <i class="fas fa-copy"></i> نسخ الرابط
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- قسم العروض الحصرية -->
+    <section id="offers" class="offers-section">
+        <div class="section-title">
+            <h2>عروض حصرية</h2>
+            <p>استفد من عروضنا المميزة لفترة محدودة</p>
+        </div>
+        
+        <div class="offers-container">
+            <!-- العرض الذهبي -->
+            <div class="offer-card golden">
+                <div class="offer-header">
+                    <div class="offer-badge">عرض محدود</div>
+                    <h3 class="offer-title">العرض الذهبي</h3>
+                    <p class="offer-description">دعوة 3 أصدقاء = بطاقة مجانية</p>
+                </div>
+                
+                <div class="offer-body">
+                    <ul class="offer-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>قم بدعوة 3 أصدقاء لفتح البطاقة لأول مرة</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>يجب أن يتم التسجيل برمز الإحالة الخاص بنا</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>يجب أن يكون الأصدقاء جدد ولم يفتحوا حساب من قبل</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>الحصول على المكافأة بعد حصول الأصدقاء الثلاثة على بطاقاتهم</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>البطاقة المجانية فارغة (بدون رصيد)</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="countdown" id="countdown-gold">
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="days-gold">00</span>
+                            <span class="countdown-label">أيام</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="hours-gold">00</span>
+                            <span class="countdown-label">ساعات</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="minutes-gold">00</span>
+                            <span class="countdown-label">دقائق</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="seconds-gold">00</span>
+                            <span class="countdown-label">ثواني</span>
+                        </div>
+                    </div>
+                    
+                    <button class="offer-btn" data-offer="golden">
+                        <i class="fas fa-gift"></i> المطالبة بالعرض
+                    </button>
+                </div>
+            </div>
+            
+            <!-- العرض الفضي -->
+            <div class="offer-card silver">
+                <div class="offer-header">
+                    <div class="offer-badge">عرض محدود</div>
+                    <h3 class="offer-title">العرض الفضي</h3>
+                    <p class="offer-description">دعوة 4 أصدقاء = 3 دولار هدية</p>
+                </div>
+                
+                <div class="offer-body">
+                    <ul class="offer-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>قم بدعوة 4 أصدقاء لفتح البطاقة لأول مرة</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>يجب أن يتم التسجيل برمز الإحالة الخاص بنا</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>يجب أن يكون الأصدقاء جدد ولم يفتحوا حساب من قبل</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>قدم لنا أسماء الأصدقاء الذين قمت بدعوتهم</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>اخبر أصدقائك أن يذكروا اسمك عند التسجيل</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>سيتم التواصل معك لتسليم الجائزة عبر الواتساب</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="countdown" id="countdown-silver">
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="days-silver">00</span>
+                            <span class="countdown-label">أيام</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="hours-silver">00</span>
+                            <span class="countdown-label">ساعات</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="minutes-silver">00</span>
+                            <span class="countdown-label">دقائق</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="seconds-silver">00</span>
+                            <span class="countdown-label">ثواني</span>
+                        </div>
+                    </div>
+                    
+                    <button class="offer-btn" data-offer="silver">
+                        <i class="fas fa-gift"></i> المطالبة بالعرض
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1855,7 +2396,76 @@
         </div>
     </footer>
 
+    <!-- Popup جديد للعروض -->
+    <div class="popup-overlay" id="offerPopup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <button class="popup-close" id="closeOfferPopup">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h3 id="offerPopupTitle">العرض الذهبي</h3>
+            </div>
+            <div class="popup-body">
+                <div class="popup-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div id="offerConditions">
+                    <!-- سيتم ملؤها بالشروط ديناميكياً -->
+                </div>
+                
+                <form id="offerForm" style="margin-top: 2rem;">
+                    <div class="form-group">
+                        <label for="userName">اسمك الكامل</label>
+                        <input type="text" id="userName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPhone">رقم هاتفك</label>
+                        <input type="tel" id="userPhone" required placeholder="مثال: 0555555555">
+                    </div>
+                    <div class="form-group">
+                        <label for="friendNames" id="friendsLabel">أسماء الأصدقاء الذين دعوتهم</label>
+                        <textarea id="friendNames" rows="3" required placeholder="اكتب أسماء الأصدقاء الذين قمت بدعوتهم مفصولة بفاصلة"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="popup-button">
+                        <i class="fas fa-paper-plane"></i> إرسال الطلب
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // إنشاء خلفية النجوم المتحركة
+        function createStars() {
+            const starsBackground = document.getElementById('starsBackground');
+            const starCount = Math.floor(window.innerWidth * window.innerHeight / 1500);
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // حجم عشوائي بين 1-3 بكسل
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // موقع عشوائي
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // شفافية عشوائية
+                star.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                // مدة ومدة تأخير عشوائية للوميض
+                const duration = Math.random() * 6 + 4;
+                const delay = Math.random() * 5;
+                star.style.animation = `twinkle ${duration}s linear ${delay}s infinite`;
+                
+                starsBackground.appendChild(star);
+            }
+        }
+        
         // وظيفة للأسئلة الشائعة
         function toggleFaq(element) {
             const answer = element.nextElementSibling;
@@ -1899,10 +2509,11 @@
             const lastName = document.getElementById('lastName').value;
             const firstName = document.getElementById('firstName').value;
             const phone = document.getElementById('phone').value;
-            const hasCard = document.getElementById('hasCard').value;
             const birthdate = document.getElementById('birthdate').value;
             const documentType = document.getElementById('documentType').value;
             const cardType = document.getElementById('cardType').value;
+            const referrerName = document.getElementById('referrerName').value;
+            const hasAccount = document.getElementById('hasAccount').value;
             
             // إخفاء رسائل الخطأ
             document.getElementById('phoneError').style.display = 'none';
@@ -1929,7 +2540,7 @@
                 submittedRequests.add(phone);
                 
                 // بناء رسالة الواتساب
-                const message = `طلب بطاقة RedotPay جديد%0A%0Aالاسم: ${firstName} ${lastName}%0Aرقم الهاتف: ${phone}%0Aهل لديك بطاقة من قبل؟: ${hasCard}%0Aتاريخ الميلاد: ${birthdate}%0Aوثيقة التحقق: ${documentType}%0Aنوع البطاقة: ${cardType}`;
+                const message = `طلب بطاقة RedotPay جديد%0A%0Aالاسم: ${firstName} ${lastName}%0Aرقم الهاتف: ${phone}%0Aتاريخ الميلاد: ${birthdate}%0Aوثيقة التحقق: ${documentType}%0Aنوع البطاقة: ${cardType}%0Aاسم الشخص الذي دعاه: ${referrerName || 'لا يوجد'}%0Aهل لديك حساب مفعل؟: ${hasAccount}`;
                 
                 // إنشاء رابط الواتساب
                 const whatsappLink = `https://wa.me/213552784799?text=${message}`;
@@ -2155,6 +2766,148 @@
             if (activeDot) {
                 activeDot.style.setProperty('--progress', '100%');
             }
+        });
+        
+        // وظائف جديدة للعروض
+        document.querySelectorAll('.offer-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const offerType = this.getAttribute('data-offer');
+                showOfferPopup(offerType);
+            });
+        });
+        
+        // وظيفة إظهار نافذة العرض
+        function showOfferPopup(offerType) {
+            const popup = document.getElementById('offerPopup');
+            const title = document.getElementById('offerPopupTitle');
+            const conditions = document.getElementById('offerConditions');
+            const friendsLabel = document.getElementById('friendsLabel');
+            
+            if (offerType === 'golden') {
+                title.textContent = 'العرض الذهبي';
+                conditions.innerHTML = `
+                    <h4 style="margin-bottom: 1rem; color: var(--gold);">شروط العرض الذهبي</h4>
+                    <ul style="text-align: right; margin-bottom: 1.5rem; padding-right: 1.5rem;">
+                        <li style="margin-bottom: 0.8rem;">يجب أن يكون الأشخاص الذين قمت بدعوتهم لم يفعلوا الحساب من قبل</li>
+                        <li style="margin-bottom: 0.8rem;">يجب أن يتم التسجيل برمز الإحالة الخاص بنا (nw6bw)</li>
+                        <li style="margin-bottom: 0.8rem;">الحصول على المكافأة بعد حصول الأصدقاء الثلاثة كلهم على بطاقاتهم</li>
+                        <li>البطاقة المجانية فارغة (بدون رصيد)</li>
+                    </ul>
+                `;
+                friendsLabel.textContent = 'أسماء الأصدقاء الثلاثة الذين دعوتهم';
+            } else {
+                title.textContent = 'العرض الفضي';
+                conditions.innerHTML = `
+                    <h4 style="margin-bottom: 1rem; color: var(--silver);">شروط العرض الفضي</h4>
+                    <ul style="text-align: right; margin-bottom: 1.5rem; padding-right: 1.5rem;">
+                        <li style="margin-bottom: 0.8rem;">يجب أن يكون الأشخاص الذين قمت بدعوتهم لم يفعلوا الحساب من قبل</li>
+                        <li style="margin-bottom: 0.8rem;">يجب أن يتم التسجيل برمز الإحالة الخاص بنا (nw6bw)</li>
+                        <li style="margin-bottom: 0.8rem;">قدم لي أسماء أصدقائك الذين قمت بدعوتهم</li>
+                        <li style="margin-bottom: 0.8rem;">اخبر أصدقائك أن يذكروا اسمك عند التسجيل</li>
+                        <li>سيتم التواصل معك بواسطة أحد عملائنا على الواتساب لتسليم الجائزة</li>
+                    </ul>
+                `;
+                friendsLabel.textContent = 'أسماء الأصدقاء الأربعة الذين دعوتهم';
+            }
+            
+            popup.classList.add('active');
+        }
+        
+        // إغلاق نافذة العرض
+        document.getElementById('closeOfferPopup').addEventListener('click', function() {
+            document.getElementById('offerPopup').classList.remove('active');
+        });
+        
+        // إرسال طلب العرض
+        document.getElementById('offerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userName = document.getElementById('userName').value;
+            const userPhone = document.getElementById('userPhone').value;
+            const friendNames = document.getElementById('friendNames').value;
+            const offerType = document.getElementById('offerPopupTitle').textContent.includes('ذهبي') ? 'ذهبي' : 'فضي';
+            
+            // بناء رسالة البريد الإلكتروني
+            const subject = `طلب مشاركة في العرض ${offerType}`;
+            const body = `تفاصيل طلب العرض:\n\nالاسم: ${userName}\nرقم الهاتف: ${userPhone}\nالعرض: ${offerType}\nأسماء الأصدقاء:\n${friendNames}`;
+            
+            // إرسال البريد الإلكتروني (هذا مثال فقط، في الواقع تحتاج لاستخدام خدمة بريدية)
+            const emailLink = `mailto:ziroz1385@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = emailLink;
+            
+            // إظهار رسالة النجاح
+            showPopup('تم إرسال طلبك', 'شكراً لك!', 'تم إرسال طلب المشاركة في العرض. سنقوم بالتحقق من المعلومات وسيتم التواصل معك قريباً.');
+            
+            // إغلاق النافذة وإعادة تعيين النموذج
+            document.getElementById('offerPopup').classList.remove('active');
+            this.reset();
+        });
+        
+        // وظيفة نسخ النص
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showPopup('تم النسخ', 'نجاح!', 'تم نسخ النص إلى الحافظة بنجاح.');
+            }).catch(err => {
+                showPopup('خطأ', 'فشل النسخ', 'تعذر نسخ النص. يرجى المحاولة مرة أخرى.');
+            });
+        }
+        
+        // وظيفة العد التنازلي
+        function updateCountdown() {
+            // تاريخ انتهاء العرض: 15 أغسطس 2025
+            const endDate = new Date('August 15, 2025 23:59:59').getTime();
+            const now = new Date().getTime();
+            const distance = endDate - now;
+            
+            if (distance < 0) {
+                // إذا انتهى الوقت
+                document.getElementById('days-gold').textContent = '00';
+                document.getElementById('hours-gold').textContent = '00';
+                document.getElementById('minutes-gold').textContent = '00';
+                document.getElementById('seconds-gold').textContent = '00';
+                
+                document.getElementById('days-silver').textContent = '00';
+                document.getElementById('hours-silver').textContent = '00';
+                document.getElementById('minutes-silver').textContent = '00';
+                document.getElementById('seconds-silver').textContent = '00';
+                
+                document.querySelectorAll('.offer-btn').forEach(btn => {
+                    btn.disabled = true;
+                    btn.textContent = 'انتهى العرض';
+                });
+                
+                return;
+            }
+            
+            // حساب الوقت المتبقي
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // تحديث العداد الذهبي
+            document.getElementById('days-gold').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours-gold').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes-gold').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds-gold').textContent = seconds.toString().padStart(2, '0');
+            
+            // تحديث العداد الفضي
+            document.getElementById('days-silver').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours-silver').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes-silver').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds-silver').textContent = seconds.toString().padStart(2, '0');
+            
+            // تحديث العد التنازلي كل ثانية
+            setTimeout(updateCountdown, 1000);
+        }
+        
+        // بدء العد التنازلي عند تحميل الصفحة
+        window.addEventListener('load', function() {
+            createStars();
+            updateCountdown();
         });
     </script>
 </body>
