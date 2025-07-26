@@ -19,10 +19,12 @@
             --gray: #6c757d;
             --success: #28a745;
             --whatsapp: #25D366;
+            --bac-offer: #4CAF50;
             
             /* ألوان للعروض */
             --gold-gradient: linear-gradient(135deg, #ffd700, #d4af37);
             --silver-gradient: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+            --bac-gradient: linear-gradient(135deg, #4CAF50, #2E7D32);
         }
         
         * {
@@ -41,7 +43,7 @@
             min-height: 100vh;
         }
         
-        /* خلفية النجوم */
+        /* خلفية النجوم المتحركة */
         .stars-background {
             position: fixed;
             top: 0;
@@ -57,12 +59,17 @@
             position: absolute;
             background: white;
             border-radius: 50%;
-            animation: twinkle linear infinite;
+            animation: twinkle linear infinite, moveStars linear infinite;
         }
         
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; }
             50% { opacity: 1; }
+        }
+        
+        @keyframes moveStars {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-100px) translateY(50px); }
         }
         
         /* الترويسة المحسنة */
@@ -343,7 +350,8 @@
         }
         
         .form-group input,
-        .form-group select {
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 0.9rem 1.3rem;
             border: 1px solid rgba(83, 52, 131, 0.5);
@@ -356,7 +364,8 @@
         }
         
         .form-group input:focus,
-        .form-group select:focus {
+        .form-group select:focus,
+        .form-group textarea:focus {
             border-color: var(--gold);
             outline: none;
             box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
@@ -500,17 +509,6 @@
             font-size: 1.2rem;
         }
         
-        .feature-icon {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 36px;
-            height: 36px;
-            background: rgba(233, 69, 96, 0.1);
-            border-radius: 50%;
-            color: var(--secondary);
-        }
-        
         .price-tag {
             text-align: center;
             font-size: 2rem;
@@ -524,6 +522,23 @@
             color: rgba(255, 255, 255, 0.7);
             display: block;
             margin-top: 0.3rem;
+        }
+        
+        .discount-tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+            animation: glow 1.5s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 5px var(--secondary); }
+            to { box-shadow: 0 0 20px var(--secondary); }
         }
         
         .card-button {
@@ -1491,6 +1506,10 @@
             background: var(--silver-gradient);
         }
         
+        .offer-card.bac {
+            background: var(--bac-gradient);
+        }
+        
         .offer-header {
             padding: 2rem;
             text-align: center;
@@ -1504,6 +1523,10 @@
         
         .offer-card.silver .offer-header {
             background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
+        }
+        
+        .offer-card.bac .offer-header {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
         }
         
         .offer-badge {
@@ -1591,9 +1614,8 @@
             padding: 1.2rem;
             border: none;
             border-radius: 10px;
+            text-decoration: none;
             font-weight: 700;
-            font-size: 1.2rem;
-            cursor: pointer;
             transition: all 0.3s;
             margin-top: 1rem;
             position: relative;
@@ -1610,6 +1632,12 @@
             background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
             color: white;
             box-shadow: 0 5px 15px rgba(192, 192, 192, 0.4);
+        }
+        
+        .offer-card.bac .offer-btn {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            color: white;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
         }
         
         .offer-btn:hover {
@@ -1644,6 +1672,12 @@
             .countdown-value {
                 font-size: 1.5rem;
             }
+            
+            /* تحسينات للدردشة */
+            .chat-container {
+                width: 90%;
+                height: 70vh;
+            }
         }
         
         /* تحسينات إضافية للنجوم */
@@ -1652,10 +1686,379 @@
                 animation-duration: 8s !important;
             }
         }
+        
+        /* واجهة الدردشة */
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background: rgba(26, 26, 46, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            z-index: 2000;
+            overflow: hidden;
+            border: 1px solid var(--accent);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .chat-container.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, var(--accent), #3a2670);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header h3 {
+            color: white;
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .chat-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 0.8rem;
+            border-radius: 12px;
+            position: relative;
+        }
+        
+        .message.received {
+            background: rgba(15, 52, 96, 0.5);
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+        
+        .message.sent {
+            background: var(--accent);
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background: rgba(15, 52, 96, 0.3);
+            gap: 0.5rem;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .chat-input button {
+            background: var(--accent);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* زر فتح لوحة الإدارة */
+        .admin-toggle {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #3a2670);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .admin-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* لوحة الإدارة */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 3000;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .admin-container {
+            background: #1a1a2e;
+            max-width: 1200px;
+            margin: 2rem auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, var(--accent), #3a2670);
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .admin-header h2 {
+            color: white;
+            margin: 0;
+        }
+        
+        .admin-body {
+            padding: 2rem;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-tab {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .admin-tab.active {
+            background: var(--accent);
+        }
+        
+        .admin-content {
+            display: none;
+        }
+        
+        .admin-content.active {
+            display: block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        th, td {
+            padding: 0.8rem;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        th {
+            background: rgba(15, 52, 96, 0.5);
+        }
+        
+        .admin-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* زر فتح الدردشة */
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--whatsapp), #128C7E);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+        
+        .chat-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        /* شعار التخفيض */
+        .discount-badge {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background: var(--secondary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            animation: rotate 8s infinite linear;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* حقل تحميل الصور */
+        .file-input-container {
+            position: relative;
+            margin-top: 1rem;
+        }
+        
+        .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            display: block;
+            padding: 0.9rem 1.3rem;
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            text-align: center;
+            background: rgba(15, 52, 96, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .file-input-label:hover {
+            background: rgba(15, 52, 96, 0.4);
+            border-color: var(--gold);
+        }
+        
+        /* التعديلات الجديدة للعروض */
+        .offer-conditions {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: right;
+        }
+        
+        .offer-conditions h4 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+        
+        .offer-conditions ul {
+            padding-right: 1.5rem;
+        }
+        
+        .offer-conditions li {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+        }
+        
+        .popup-header .offer-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .popup-header .offer-close:hover {
+            background: var(--secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .popup-content {
+                max-width: 95%;
+            }
+            
+            .offer-conditions {
+                max-height: 200px;
+            }
+            
+            .offer-conditions h4 {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- خلفية النجوم -->
+    <!-- خلفية النجوم المتحركة -->
     <div class="stars-background" id="starsBackground"></div>
     
     <!-- Popup -->
@@ -1806,10 +2209,11 @@
                 </div>
                 <div class="form-group">
                     <label for="cardType">نوع البطاقة</label>
-                    <select id="cardType" required>
+                    <select id="cardType" required onchange="toggleBacField()">
                         <option value="">اختر نوع البطاقة</option>
                         <option value="virtual">بطاقة افتراضية (10 دولار)</option>
                         <option value="plastic">بطاقة بلاستيكية (100 دولار)</option>
+                        <option value="bac">عرض خاص BAC 2025</option>
                     </select>
                 </div>
                 
@@ -1830,6 +2234,17 @@
                     </select>
                 </div>
                 
+                <!-- حقل شهادة البكالوريا - يظهر فقط عند اختيار العرض الخاص -->
+                <div class="form-group" id="bacField" style="display: none;">
+                    <label for="bacImage">صورة شهادة البكالوريا</label>
+                    <div class="file-input-container">
+                        <input type="file" id="bacImage" class="file-input" accept="image/*">
+                        <label for="bacImage" class="file-input-label">
+                            <i class="fas fa-upload"></i> انقر لتحميل صورة شهادة البكالوريا
+                        </label>
+                    </div>
+                </div>
+                
                 <button type="submit" class="form-submit">
                     <i class="fas fa-paper-plane"></i> إرسال الطلب
                 </button>
@@ -1846,6 +2261,10 @@
         
         <div class="comparison-container">
             <div class="card-option">
+                <div class="discount-badge">
+                    <span>تخفيض</span>
+                    <span>33%</span>
+                </div>
                 <div class="card-badge">الأكثر طلباً</div>
                 <div class="card-header">
                     <h3>البطاقة الافتراضية</h3>
@@ -1879,8 +2298,8 @@
                         </li>
                     </ul>
                     <div class="price-tag">
-                        1900 دج
-                        <span>(10 دولار مع التخفيض)</span>
+                        2000 دج
+                        <span><del style="color:#ff6b6b; opacity:0.7;">3000 دج</del> (33% تخفيض)</span>
                     </div>
                     <a href="#orderForm" class="card-button">اختر البطاقة</a>
                 </div>
@@ -1919,7 +2338,7 @@
                         </li>
                     </ul>
                     <div class="price-tag">
-                        13,500 دج
+                        28000 دج
                         <span>(100 دولار)</span>
                     </div>
                     <a href="#orderForm" class="card-button">اختر البطاقة</a>
@@ -2109,6 +2528,55 @@
                     
                     <button class="offer-btn" data-offer="silver">
                         <i class="fas fa-gift"></i> المطالبة بالعرض
+                    </button>
+                </div>
+            </div>
+            
+            <!-- عرض BAC 2025 -->
+            <div class="offer-card bac">
+                <div class="offer-header">
+                    <div class="offer-badge">عرض خاص</div>
+                    <h3 class="offer-title">عرض BAC 2025</h3>
+                    <p class="offer-description">تخفيض خاص لحاملي شهادة البكالوريا</p>
+                </div>
+                
+                <div class="offer-body">
+                    <ul class="offer-features">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>مشحونة بـ 5 دولار فقط بـ 1500 دج</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>بطاقة فارغة فقط بـ 900 دج</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>يجب تقديم صورة من شهادة البكالوريا</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>عرض ساري حتى 31 ديسمبر 2025</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>خصم إضافي عند الدفع عبر Yassir أو CIB</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="price-tag" style="display: flex; justify-content: space-around; margin: 2rem 0;">
+                        <div>
+                            <div style="font-size: 1.8rem; color: white; margin-bottom: 0.5rem;">1500 دج</div>
+                            <div style="color: #ffcc00;">بطاقة مشحونة</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 1.8rem; color: white; margin-bottom: 0.5rem;">900 دج</div>
+                            <div style="color: #ffcc00;">بطاقة فارغة</div>
+                        </div>
+                    </div>
+                    
+                    <button class="offer-btn" data-offer="bac">
+                        <i class="fas fa-ticket-alt"></i> احصل على العرض
                     </button>
                 </div>
             </div>
@@ -2338,7 +2806,7 @@
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="faq-answer">
-                <p>نعم! نوفر عروضاً مختلفة وأسعاراً تنافسية باستمرار. حالياً، لدينا عرض خاص على البطاقات الافتراضية بسعر 1900 دج بدلاً من 2500 دج. كما تحصل على 5 دولار هدية مشحونة على البطاقة مع كل عملية شراء.</p>
+                <p>نعم! نوفر عروضاً مختلفة وأسعاراً تنافسية باستمرار. حالياً، لدينا عرض خاص على البطاقات الافتراضية بسعر 2000 دج بدلاً من 3000 دج. كما تحصل على 5 دولار هدية مشحونة على البطاقة مع كل عملية شراء.</p>
             </div>
         </div>
     </section>
@@ -2400,7 +2868,7 @@
     <div class="popup-overlay" id="offerPopup">
         <div class="popup-content">
             <div class="popup-header">
-                <button class="popup-close" id="closeOfferPopup">
+                <button class="offer-close" id="closeOfferPopup">
                     <i class="fas fa-times"></i>
                 </button>
                 <h3 id="offerPopupTitle">العرض الذهبي</h3>
@@ -2409,7 +2877,7 @@
                 <div class="popup-icon">
                     <i class="fas fa-gift"></i>
                 </div>
-                <div id="offerConditions">
+                <div class="offer-conditions" id="offerConditions">
                     <!-- سيتم ملؤها بالشروط ديناميكياً -->
                 </div>
                 
@@ -2431,6 +2899,109 @@
                         <i class="fas fa-paper-plane"></i> إرسال الطلب
                     </button>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- واجهة الدردشة -->
+    <div class="chat-toggle" id="chatToggle">
+        <i class="fas fa-comments"></i>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <h3>الدردشة مع الدعم</h3>
+            <button class="chat-close" id="chatClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message received">
+                مرحباً! كيف يمكنني مساعدتك اليوم؟
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="اكتب رسالتك هنا...">
+            <button id="sendMessage">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- زر فتح لوحة الإدارة -->
+    <div class="admin-toggle" id="adminToggle">
+        <i class="fas fa-cog"></i>
+    </div>
+    
+    <!-- لوحة الإدارة -->
+    <div class="admin-panel" id="adminPanel">
+        <button class="admin-close" id="adminClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>لوحة إدارة MAXSELL</h2>
+            </div>
+            <div class="admin-body">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" data-tab="orders">الطلبات</button>
+                    <button class="admin-tab" data-tab="recharges">طلبات الشحن</button>
+                    <button class="admin-tab" data-tab="offers">طلبات العروض</button>
+                </div>
+                
+                <div class="admin-content active" id="ordersContent">
+                    <h3>الطلبات الأخيرة</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>الهاتف</th>
+                                <th>نوع البطاقة</th>
+                                <th>الحالة</th>
+                                <th>التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable">
+                            <!-- سيتم ملؤها ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="admin-content" id="rechargesContent">
+                    <h3>طلبات الشحن الأخيرة</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم UID</th>
+                                <th>المبلغ</th>
+                                <th>العملة</th>
+                                <th>الحالة</th>
+                                <th>التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rechargesTable">
+                            <!-- سيتم ملؤها ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="admin-content" id="offersContent">
+                    <h3>طلبات العروض الأخيرة</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>الاسم</th>
+                                <th>الهاتف</th>
+                                <th>نوع العرض</th>
+                                <th>الحالة</th>
+                                <th>التاريخ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="offersTable">
+                            <!-- سيتم ملؤها ديناميكياً -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -2457,10 +3028,11 @@
                 // شفافية عشوائية
                 star.style.opacity = Math.random() * 0.7 + 0.3;
                 
-                // مدة ومدة تأخير عشوائية للوميض
+                // مدة ومدة تأخير عشوائية للوميض والحركة
                 const duration = Math.random() * 6 + 4;
                 const delay = Math.random() * 5;
-                star.style.animation = `twinkle ${duration}s linear ${delay}s infinite`;
+                const moveDuration = Math.random() * 30 + 20;
+                star.style.animation = `twinkle ${duration}s linear ${delay}s infinite, moveStars ${moveDuration}s linear infinite`;
                 
                 starsBackground.appendChild(star);
             }
@@ -2482,6 +3054,9 @@
         
         // متغير لتتبع الطلبات المرسلة
         const submittedRequests = new Set();
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let recharges = JSON.parse(localStorage.getItem('recharges')) || [];
+        let offers = JSON.parse(localStorage.getItem('offers')) || [];
         
         // وظيفة حساب العمر
         function calculateAge(birthDate) {
@@ -2501,7 +3076,7 @@
             return regex.test(phone);
         }
         
-        // وظيفة إرسال النموذج إلى الواتساب
+        // وظيفة إرسال النموذج
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -2539,17 +3114,21 @@
                 // إضافة الطلب إلى مجموعة الطلبات المرسلة
                 submittedRequests.add(phone);
                 
-                // بناء رسالة الواتساب
-                const message = `طلب بطاقة RedotPay جديد%0A%0Aالاسم: ${firstName} ${lastName}%0Aرقم الهاتف: ${phone}%0Aتاريخ الميلاد: ${birthdate}%0Aوثيقة التحقق: ${documentType}%0Aنوع البطاقة: ${cardType}%0Aاسم الشخص الذي دعاه: ${referrerName || 'لا يوجد'}%0Aهل لديك حساب مفعل؟: ${hasAccount}`;
-                
-                // إنشاء رابط الواتساب
-                const whatsappLink = `https://wa.me/213552784799?text=${message}`;
-                
-                // فتح رابط الواتساب في نافذة جديدة
-                window.open(whatsappLink, '_blank');
+                // حفظ الطلب في قاعدة البيانات
+                const order = {
+                    id: Date.now(),
+                    name: `${firstName} ${lastName}`,
+                    phone: phone,
+                    cardType: cardType,
+                    status: 'قيد المراجعة',
+                    date: new Date().toLocaleString('ar-EG')
+                };
+                orders.push(order);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                updateAdminTables();
                 
                 // إظهار رسالة النجاح
-                showPopup('تم ارسال طلبك بنجاح!', 'شكراً لك!', 'تم إرسال طلبك إلى خدمة العملاء عبر الواتساب. سوف نتصل بك خلال 24 ساعة لتأكيد تفاصيل البطاقة.');
+                showPopup('تم ارسال طلبك بنجاح!', 'شكراً لك!', 'تم استلام طلبك بنجاح. سوف نتصل بك خلال 24 ساعة لتأكيد تفاصيل البطاقة.');
                 
                 // إعادة تعيين النموذج
                 this.reset();
@@ -2647,18 +3226,21 @@
                 return;
             }
             
-            // بناء رسالة الواتساب
-            const currencyText = currency === 'dzd' ? 'دج' : '$';
-            const message = `طلب شحن بطاقة RedotPay%0A%0Aرقم UID: ${uid}%0Aالعملة: ${currencyText}%0Aالمبلغ: ${amount} ${currencyText}`;
-            
-            // إنشاء رابط الواتساب
-            const whatsappLink = `https://wa.me/213552784799?text=${message}`;
-            
-            // فتح رابط الواتساب في نافذة جديدة
-            window.open(whatsappLink, '_blank');
+            // حفظ طلب الشحن في قاعدة البيانات
+            const recharge = {
+                id: Date.now(),
+                uid: uid,
+                amount: amount,
+                currency: currency,
+                status: 'قيد الانتظار',
+                date: new Date().toLocaleString('ar-EG')
+            };
+            recharges.push(recharge);
+            localStorage.setItem('recharges', JSON.stringify(recharges));
+            updateAdminTables();
             
             // إظهار رسالة التأكيد
-            showPopup('تم إرسال الطلب', 'شكراً لك!', 'تم إرسال طلب شحن بطاقتك إلى خدمة العملاء عبر الواتساب. جاري انتظار الرد من أحد ممثلينا.');
+            showPopup('تم إرسال الطلب', 'شكراً لك!', 'تم إرسال طلب شحن بطاقتك إلى خدمة العملاء بنجاح. جاري انتظار الرد من أحد ممثلينا.');
             
             // إعادة تعيين النموذج وإغلاق البوب آب
             this.reset();
@@ -2786,28 +3368,41 @@
             if (offerType === 'golden') {
                 title.textContent = 'العرض الذهبي';
                 conditions.innerHTML = `
-                    <h4 style="margin-bottom: 1rem; color: var(--gold);">شروط العرض الذهبي</h4>
-                    <ul style="text-align: right; margin-bottom: 1.5rem; padding-right: 1.5rem;">
-                        <li style="margin-bottom: 0.8rem;">يجب أن يكون الأشخاص الذين قمت بدعوتهم لم يفعلوا الحساب من قبل</li>
-                        <li style="margin-bottom: 0.8rem;">يجب أن يتم التسجيل برمز الإحالة الخاص بنا (nw6bw)</li>
-                        <li style="margin-bottom: 0.8rem;">الحصول على المكافأة بعد حصول الأصدقاء الثلاثة كلهم على بطاقاتهم</li>
+                    <h4>شروط العرض الذهبي</h4>
+                    <ul>
+                        <li>يجب أن يكون الأشخاص الذين قمت بدعوتهم لم يفعلوا الحساب من قبل</li>
+                        <li>يجب أن يتم التسجيل برمز الإحالة الخاص بنا (nw6bw)</li>
+                        <li>الحصول على المكافأة بعد حصول الأصدقاء الثلاثة كلهم على بطاقاتهم</li>
                         <li>البطاقة المجانية فارغة (بدون رصيد)</li>
                     </ul>
                 `;
                 friendsLabel.textContent = 'أسماء الأصدقاء الثلاثة الذين دعوتهم';
-            } else {
+            } else if (offerType === 'silver') {
                 title.textContent = 'العرض الفضي';
                 conditions.innerHTML = `
-                    <h4 style="margin-bottom: 1rem; color: var(--silver);">شروط العرض الفضي</h4>
-                    <ul style="text-align: right; margin-bottom: 1.5rem; padding-right: 1.5rem;">
-                        <li style="margin-bottom: 0.8rem;">يجب أن يكون الأشخاص الذين قمت بدعوتهم لم يفعلوا الحساب من قبل</li>
-                        <li style="margin-bottom: 0.8rem;">يجب أن يتم التسجيل برمز الإحالة الخاص بنا (nw6bw)</li>
-                        <li style="margin-bottom: 0.8rem;">قدم لي أسماء أصدقائك الذين قمت بدعوتهم</li>
-                        <li style="margin-bottom: 0.8rem;">اخبر أصدقائك أن يذكروا اسمك عند التسجيل</li>
+                    <h4>شروط العرض الفضي</h4>
+                    <ul>
+                        <li>يجب أن يكون الأشخاص الذين قمت بدعوتهم لم يفعلوا الحساب من قبل</li>
+                        <li>يجب أن يتم التسجيل برمز الإحالة الخاص بنا (nw6bw)</li>
+                        <li>قدم لي أسماء أصدقائك الذين قمت بدعوتهم</li>
+                        <li>اخبر أصدقائك أن يذكروا اسمك عند التسجيل</li>
                         <li>سيتم التواصل معك بواسطة أحد عملائنا على الواتساب لتسليم الجائزة</li>
                     </ul>
                 `;
                 friendsLabel.textContent = 'أسماء الأصدقاء الأربعة الذين دعوتهم';
+            } else {
+                title.textContent = 'عرض BAC 2025';
+                conditions.innerHTML = `
+                    <h4>شروط العرض الخاص</h4>
+                    <ul>
+                        <li>يجب أن تكون حاملاً لشهادة البكالوريا 2025</li>
+                        <li>يجب تقديم صورة من شهادة البكالوريا</li>
+                        <li>الحد الأقصى للبطاقة المشحونة: 10 دولار</li>
+                        <li>عرض ساري حتى 31 ديسمبر 2025</li>
+                        <li>خصم إضافي عند الدفع عبر Yassir أو CIB</li>
+                    </ul>
+                `;
+                friendsLabel.textContent = 'رقم شهادة البكالوريا';
             }
             
             popup.classList.add('active');
@@ -2818,6 +3413,25 @@
             document.getElementById('offerPopup').classList.remove('active');
         });
         
+        // وظيفة إرسال طلب العرض إلى الواتساب
+        function sendOfferToWhatsApp(userName, userPhone, friendNames, offerType) {
+            let message = `طلب مشاركة في عرض جديد!%0A%0A`;
+            message += `*النوع:* ${offerType}%0A`;
+            message += `*الاسم:* ${userName}%0A`;
+            message += `*الهاتف:* ${userPhone}%0A`;
+            
+            if (offerType === 'ذهبي' || offerType === 'فضي') {
+                message += `*أسماء الأصدقاء:*%0A${friendNames}%0A`;
+            } else {
+                message += `*رقم الشهادة:* ${friendNames}%0A`;
+            }
+            
+            message += `%0Aيرجى التواصل مع المستخدم لتأكيد الطلب.`;
+            
+            const whatsappUrl = `https://wa.me/213552784799?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
         // إرسال طلب العرض
         document.getElementById('offerForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -2825,18 +3439,28 @@
             const userName = document.getElementById('userName').value;
             const userPhone = document.getElementById('userPhone').value;
             const friendNames = document.getElementById('friendNames').value;
-            const offerType = document.getElementById('offerPopupTitle').textContent.includes('ذهبي') ? 'ذهبي' : 'فضي';
+            const offerType = document.getElementById('offerPopupTitle').textContent.includes('ذهبي') ? 'ذهبي' : 
+                            document.getElementById('offerPopupTitle').textContent.includes('فضي') ? 'فضي' : 'BAC 2025';
             
-            // بناء رسالة البريد الإلكتروني
-            const subject = `طلب مشاركة في العرض ${offerType}`;
-            const body = `تفاصيل طلب العرض:\n\nالاسم: ${userName}\nرقم الهاتف: ${userPhone}\nالعرض: ${offerType}\nأسماء الأصدقاء:\n${friendNames}`;
+            // حفظ طلب العرض في قاعدة البيانات
+            const offer = {
+                id: Date.now(),
+                name: userName,
+                phone: userPhone,
+                offerType: offerType,
+                details: friendNames,
+                status: 'قيد المراجعة',
+                date: new Date().toLocaleString('ar-EG')
+            };
+            offers.push(offer);
+            localStorage.setItem('offers', JSON.stringify(offers));
+            updateAdminTables();
             
-            // إرسال البريد الإلكتروني (هذا مثال فقط، في الواقع تحتاج لاستخدام خدمة بريدية)
-            const emailLink = `mailto:ziroz1385@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.location.href = emailLink;
+            // إرسال الطلب إلى الواتساب
+            sendOfferToWhatsApp(userName, userPhone, friendNames, offerType);
             
-            // إظهار رسالة النجاح
-            showPopup('تم إرسال طلبك', 'شكراً لك!', 'تم إرسال طلب المشاركة في العرض. سنقوم بالتحقق من المعلومات وسيتم التواصل معك قريباً.');
+            // إظهار رسالة النجاح وإغلاق النافذة
+            showPopup('تم إرسال طلبك', 'شكراً لك!', 'تم إرسال طلب المشاركة في العرض بنجاح. سيتم التواصل معك قريباً لتأكيد الطلب.');
             
             // إغلاق النافذة وإعادة تعيين النموذج
             document.getElementById('offerPopup').classList.remove('active');
@@ -2904,10 +3528,168 @@
             setTimeout(updateCountdown, 1000);
         }
         
+        // واجهة الدردشة
+        document.getElementById('chatToggle').addEventListener('click', function() {
+            document.getElementById('chatContainer').classList.toggle('active');
+        });
+        
+        document.getElementById('chatClose').addEventListener('click', function() {
+            document.getElementById('chatContainer').classList.remove('active');
+        });
+        
+        document.getElementById('sendMessage').addEventListener('click', function() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const messagesContainer = document.getElementById('chatMessages');
+                
+                // إضافة رسالة المستخدم
+                const userMessage = document.createElement('div');
+                userMessage.classList.add('message', 'sent');
+                userMessage.textContent = message;
+                messagesContainer.appendChild(userMessage);
+                
+                // مسح حقل الإدخال
+                input.value = '';
+                
+                // إضافة رد الدعم (وهمي)
+                setTimeout(() => {
+                    const supportMessage = document.createElement('div');
+                    supportMessage.classList.add('message', 'received');
+                    supportMessage.textContent = 'شكراً على رسالتك! سوف نقوم بالرد عليك في أقرب وقت ممكن.';
+                    messagesContainer.appendChild(supportMessage);
+                    
+                    // التمرير إلى آخر رسالة
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+                
+                // التمرير إلى آخر رسالة
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        });
+        
+        // إرسال الرسالة عند الضغط على Enter
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('sendMessage').click();
+            }
+        });
+        
+        // لوحة الإدارة
+        document.getElementById('adminToggle').addEventListener('click', function() {
+            document.getElementById('adminPanel').style.display = 'block';
+        });
+        
+        document.getElementById('adminClose').addEventListener('click', function() {
+            document.getElementById('adminPanel').style.display = 'none';
+        });
+        
+        // تبديل ألسنة لوحة الإدارة
+        document.querySelectorAll('.admin-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // إزالة النشاط من جميع الألسنة
+                document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.admin-content').forEach(c => c.classList.remove('active'));
+                
+                // إضافة النشاط للسان المحدد
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(`${tabId}Content`).classList.add('active');
+            });
+        });
+        
+        // تحديث جداول لوحة الإدارة
+        function updateAdminTables() {
+            // تحديث جدول الطلبات
+            const ordersTable = document.getElementById('ordersTable');
+            ordersTable.innerHTML = '';
+            orders.slice(-5).reverse().forEach(order => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.name}</td>
+                    <td>${order.phone}</td>
+                    <td>${order.cardType}</td>
+                    <td>${order.status}</td>
+                    <td>${order.date}</td>
+                `;
+                ordersTable.appendChild(row);
+            });
+            
+            // تحديث جدول طلبات الشحن
+            const rechargesTable = document.getElementById('rechargesTable');
+            rechargesTable.innerHTML = '';
+            recharges.slice(-5).reverse().forEach(recharge => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${recharge.uid}</td>
+                    <td>${recharge.amount} ${recharge.currency === 'dzd' ? 'دج' : '$'}</td>
+                    <td>${recharge.currency === 'dzd' ? 'دينار جزائري' : 'دولار أمريكي'}</td>
+                    <td>${recharge.status}</td>
+                    <td>${recharge.date}</td>
+                `;
+                rechargesTable.appendChild(row);
+            });
+            
+            // تحديث جدول طلبات العروض
+            const offersTable = document.getElementById('offersTable');
+            offersTable.innerHTML = '';
+            offers.slice(-5).reverse().forEach(offer => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${offer.name}</td>
+                    <td>${offer.phone}</td>
+                    <td>${offer.offerType}</td>
+                    <td>${offer.status}</td>
+                    <td>${offer.date}</td>
+                `;
+                offersTable.appendChild(row);
+            });
+        }
+        
+        // وظيفة لعرض/إخفاء حقل شهادة البكالوريا
+        function toggleBacField() {
+            const cardType = document.getElementById('cardType').value;
+            const bacField = document.getElementById('bacField');
+            if (cardType === 'bac') {
+                bacField.style.display = 'block';
+            } else {
+                bacField.style.display = 'none';
+            }
+        }
+        
         // بدء العد التنازلي عند تحميل الصفحة
         window.addEventListener('load', function() {
             createStars();
             updateCountdown();
+            updateAdminTables();
+            
+            // إضافة بعض البيانات الوهمية للعرض
+            if (orders.length === 0) {
+                orders.push(
+                    {id: 1, name: 'محمد خ.', phone: '0551234567', cardType: 'بطاقة افتراضية', status: 'مكتمل', date: '2023-11-15 14:30'},
+                    {id: 2, name: 'فاطمة ز.', phone: '0777654321', cardType: 'بطاقة بلاستيكية', status: 'قيد المراجعة', date: '2023-11-16 10:15'}
+                );
+                localStorage.setItem('orders', JSON.stringify(orders));
+            }
+            
+            if (recharges.length === 0) {
+                recharges.push(
+                    {id: 1, uid: 'RD123456', amount: '1000', currency: 'dzd', status: 'مكتمل', date: '2023-11-14 16:45'},
+                    {id: 2, uid: 'RD789012', amount: '50', currency: 'usd', status: 'قيد الانتظار', date: '2023-11-15 09:20'}
+                );
+                localStorage.setItem('recharges', JSON.stringify(recharges));
+            }
+            
+            if (offers.length === 0) {
+                offers.push(
+                    {id: 1, name: 'أحمد س.', phone: '0561122334', offerType: 'ذهبي', details: 'عمر, خالد, سمير', status: 'قيد المراجعة', date: '2023-11-13 11:30'},
+                    {id: 2, name: 'ليلى م.', phone: '0777888999', offerType: 'BAC 2025', details: '2025-12345', status: 'مكتمل', date: '2023-11-14 15:10'}
+                );
+                localStorage.setItem('offers', JSON.stringify(offers));
+            }
+            
+            updateAdminTables();
         });
     </script>
 </body>
